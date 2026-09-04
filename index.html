@@ -1,0 +1,2131 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shalini S | Business Analyst & Cybersecurity</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Consolas&family=Great+Vibes&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<style>
+:root[data-theme="dark"]{
+    --bg:#0a0a0a;
+    --text:#fff;
+    --muted:#aaa;
+    --border:rgba(255,255,255,.20);
+    --card:rgba(10,10,10,.78);
+    --card-solid:#101010;
+    --hover:rgba(255,255,255,.09);
+    --input:rgba(25,25,25,.8);
+    --shadow:0 0 24px rgba(255,255,255,.08);
+    --accent:#fff;
+    --accent-contrast:#000;
+}
+:root[data-theme="light"]{
+    --bg:#f0f0f0;
+    --text:#0a0a0a;
+    --muted:#555;
+    --border:rgba(0,0,0,.18);
+    --card:rgba(255,255,255,.78);
+    --card-solid:#fff;
+    --hover:rgba(0,0,0,.07);
+    --input:rgba(255,255,255,.82);
+    --shadow:0 0 24px rgba(0,0,0,.10);
+    --accent:#0a0a0a;
+    --accent-contrast:#fff;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+    min-height:100vh;
+    background:var(--bg);
+    color:var(--text);
+    font-family:Consolas,"Courier New",monospace;
+    overflow-x:hidden;
+    cursor:none;
+    transition:background .3s,color .3s;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+
+#matrix{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+    pointer-events:none;
+    opacity:1;
+    display:block;
+}
+.noise{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:1;
+    opacity:.018;
+    background-image:radial-gradient(var(--text) .55px,transparent .55px);
+    background-size:9px 9px;
+}
+.background-glow{
+    position:fixed;
+    width:190px;
+    height:190px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:1;
+    opacity:.16;
+    filter:blur(34px);
+    background:radial-gradient(
+        circle,
+        var(--text) 0%,
+        color-mix(in srgb,var(--text) 42%,transparent) 11%,
+        color-mix(in srgb,var(--text) 15%,transparent) 28%,
+        transparent 68%
+    );
+    transform:translate(-50%,-50%);
+    transition:left .18s ease,top .18s ease;
+    mix-blend-mode:normal;
+}
+.background-glow::before{
+    content:"";
+    position:absolute;
+    inset:35px;
+    border-radius:50%;
+    background:radial-gradient(
+        circle,
+        var(--text) 0%,
+        color-mix(in srgb,var(--text) 35%,transparent) 12%,
+        transparent 62%
+    );
+    filter:blur(10px);
+    opacity:.65;
+}
+.background-glow::after{
+    content:"";
+    position:absolute;
+    inset:74px;
+    border-radius:50%;
+    background:var(--text);
+    filter:blur(2px);
+    opacity:.28;
+}
+header, main, footer{
+    position:relative;
+    z-index:2;
+}
+
+.form-status{
+    min-height:22px;
+    margin-top:12px;
+    font-size:12px;
+    line-height:1.6;
+}
+.form-status.success{
+    color:var(--text);
+    font-weight:600;
+}
+.form-status.error{
+    color:var(--muted);
+}
+.submit-btn:disabled{
+    opacity:.65;
+    cursor:wait;
+}
+
+/* Cursor */
+.cursor, .follower{
+    position:fixed;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:9999;
+    will-change:transform;
+}
+.cursor{
+    width:10px;
+    height:10px;
+    background:var(--cursor-color);
+    box-shadow:
+        0 0 8px var(--cursor-color),
+        0 0 18px var(--cursor-color);
+}
+.follower{
+    width:34px;
+    height:34px;
+    background:var(--follower-color);
+    border:1px solid var(--cursor-color);
+    box-shadow:
+        0 0 10px var(--follower-color),
+        0 0 22px var(--follower-color),
+        0 0 42px rgba(255,255,255,.16),
+        0 0 70px rgba(255,255,255,.08);
+    transition:transform .1s linear, background-color .3s, border-color .3s, box-shadow .3s;
+}
+
+/* Loader */
+.loader{
+    position:fixed;
+    inset:0;
+    background:#090909;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:99999;
+    transition:opacity .55s,visibility .55s;
+}
+.loader.hide{opacity:0;visibility:hidden}
+.loader-core{
+    width:110px;height:110px;
+    border:1px solid #fff;
+    border-radius:50%;
+    position:relative;
+    animation:spin 2s linear infinite;
+    box-shadow:0 0 35px rgba(255,255,255,.12);
+}
+.loader-core:before,.loader-core:after{
+    content:"";
+    position:absolute;
+    inset:14px;
+    border:1px dashed rgba(255,255,255,.65);
+    border-radius:50%;
+}
+.loader-core:after{
+    inset:29px;
+    border-style:solid;
+}
+.loader-text{
+    position:absolute;
+    margin-top:170px;
+    color:#fff;
+    font-size:12px;
+    letter-spacing:4px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Header */
+header{
+    position:sticky;
+    top:0;
+    z-index:500;
+    padding:18px 4vw;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    background:color-mix(in srgb,var(--card) 88%,transparent);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+}
+.logo{
+    font-family:"Great Vibes",cursive;
+    font-size:38px;
+    font-weight:bold;
+    white-space:nowrap;
+    text-shadow:0 0 12px var(--border);
+}
+nav{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+}
+nav a{
+    padding:8px 12px;
+    border:1px solid transparent;
+    font-size:14px;
+    transition:.25s;
+}
+nav a:hover,nav a.active{
+    border-color:var(--text);
+    box-shadow:0 0 10px var(--border);
+}
+.theme-toggle{
+    background:transparent;
+    color:var(--text);
+    border:1px solid var(--text);
+    border-radius:20px;
+    padding:8px 14px;
+    cursor:none;
+    display:flex;
+    gap:8px;
+    align-items:center;
+}
+.theme-toggle:hover{background:var(--hover);box-shadow:0 0 12px var(--border)}
+
+/* Layout */
+main{position:relative;z-index:1}
+.section{
+    width:min(1180px,92%);
+    margin:auto;
+    padding:100px 0;
+    scroll-margin-top:80px;
+}
+.section-heading{text-align:center;margin-bottom:55px}
+.section-heading h2{
+    font-size:clamp(28px,4vw,42px);
+    margin-bottom:15px;
+    text-shadow:0 0 12px var(--border);
+}
+.section-heading h2:after{
+    content:"";
+    display:block;
+    width:80px;
+    height:2px;
+    background:var(--text);
+    margin:15px auto 0;
+}
+.section-heading p{color:var(--muted);font-size:14px}
+
+/* Hero */
+.hero{
+    min-height:calc(100vh - 78px);
+    width:min(1180px,92%);
+    margin:auto;
+    display:grid;
+    grid-template-columns:1.15fr .85fr;
+    align-items:center;
+    gap:70px;
+    padding:70px 0;
+}
+.terminal-label{
+    display:inline-block;
+    border:1px solid var(--border);
+    padding:8px 12px;
+    margin-bottom:24px;
+    font-size:13px;
+}
+.hero h1{font-size:clamp(42px,7vw,82px);line-height:1.02}
+.hero h1 span{display:block}
+.hero .accent{opacity:.62}
+.hero-subtitle{
+    margin:25px 0;
+    color:var(--muted);
+    font-size:17px;
+    line-height:1.8;
+    max-width:720px;
+}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    padding:12px 18px;
+    border:1px solid var(--text);
+    transition:.25s;
+}
+.btn.primary{background:var(--text);color:var(--bg)}
+.btn:hover{transform:translateY(-3px);box-shadow:0 0 18px var(--border)}
+.hero-card{
+    background:var(--card);
+    border:1px solid var(--text);
+    box-shadow:var(--shadow);
+    backdrop-filter:blur(12px);
+    border-radius:10px;
+    padding:32px;
+}
+.code-line{line-height:2;color:var(--muted);font-size:14px}
+.code-line b{color:var(--text)}
+.code-line .prompt{color:var(--text)}
+.status{
+    margin-top:22px;
+    padding-top:18px;
+    border-top:1px solid var(--border);
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    font-size:12px;
+}
+.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--text);margin-right:7px}
+
+/* About */
+.about-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+.panel{
+    background:var(--card);
+    border:1px solid var(--text);
+    border-radius:10px;
+    padding:32px;
+    box-shadow:var(--shadow);
+    backdrop-filter:blur(10px);
+}
+.panel h3{font-size:21px;margin-bottom:18px}
+.panel p{color:var(--muted);line-height:1.8;font-size:14px}
+.fact-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    margin-top:22px;
+}
+.fact{
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:15px;
+    background:color-mix(in srgb,var(--bg) 72%,transparent);
+}
+.fact small{color:var(--muted);display:block;margin-bottom:6px}
+.fact strong{font-size:14px}
+
+/* Experience */
+.experience-wrap{
+    display:grid;
+    grid-template-columns:230px 1fr;
+    gap:25px;
+    background:var(--card);
+    border:1px solid var(--text);
+    border-radius:10px;
+    padding:35px;
+    box-shadow:var(--shadow);
+    backdrop-filter:blur(10px);
+}
+.company-list{
+    border-left:2px solid var(--text);
+    padding-left:10px;
+}
+.company{
+    padding:14px 12px;
+    cursor:none;
+    border:1px solid transparent;
+    transition:.25s;
+    font-size:13px;
+}
+.company:hover{background:var(--hover)}
+.company.active{
+    background:var(--text);
+    color:var(--bg);
+    border-color:var(--text);
+}
+.job-details{display:none}
+.job-details.active{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.job-details h3{font-size:22px;margin-bottom:10px}
+.job-toolset{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:-10px 0 20px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface,transparent);font-size:11px;color:var(--muted)}
+.job-toolset strong{color:var(--text);font-size:11px;margin-right:3px;letter-spacing:.02em}
+.job-toolset span{padding:4px 8px;border:1px solid var(--border);border-radius:999px;color:var(--muted)}
+.job-details h3 span{opacity:.65}
+.duration{color:var(--muted);font-style:italic;font-size:13px;margin-bottom:22px}
+.job-details ul{list-style:none}
+.job-details li{
+    position:relative;
+    padding-left:22px;
+    margin:0 0 14px;
+    color:var(--muted);
+    line-height:1.7;
+    font-size:14px;
+}
+.job-details li:before{content:"▹";position:absolute;left:0;color:var(--text)}
+.skills{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.skill{
+    border:1px solid var(--text);
+    border-radius:12px;
+    padding:6px 10px;
+    font-size:12px;
+}
+
+/* Skills */
+.skill-groups{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+.exploring-strip{
+    margin-top:18px;
+    padding:14px 18px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--card);
+    display:flex;
+    align-items:center;
+    gap:14px;
+    flex-wrap:wrap;
+}
+.exploring-strip strong{font-size:12px;white-space:nowrap}
+.exploring-strip .skill-cloud{margin:0;flex:1}
+.exploring-strip .skill-cloud span{padding:5px 9px;font-size:11px}
+
+.skill-box{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:25px;
+    transition:.25s;
+}
+.skill-box:hover{border-color:var(--text);box-shadow:var(--shadow);transform:translateY(-3px)}
+.skill-box h3{font-size:16px;margin-bottom:17px}
+.skill-box h3 i{margin-right:8px}
+.skill-cloud{display:flex;flex-wrap:wrap;gap:8px}
+.skill-cloud span{
+    border:1px solid var(--border);
+    padding:7px 10px;
+    border-radius:8px;
+    font-size:12px;
+    color:var(--muted);
+}
+
+.exploring-box{
+    max-width:100%;
+}
+.exploring-box .skill-cloud{
+    justify-content:flex-start;
+}
+
+/* Currently Exploring — compact but interactive */
+.exploring-strip{
+    transition:
+        transform .28s ease,
+        border-color .28s ease,
+        box-shadow .28s ease,
+        background-color .28s ease;
+}
+@media (hover:hover) and (pointer:fine){
+    .exploring-strip:hover{
+        transform:translateY(-4px);
+        border-color:var(--text);
+        box-shadow:var(--shadow);
+        background:rgba(127,127,127,.045);
+    }
+}
+.exploring-strip .skill-cloud span{
+    cursor:default;
+    transition:
+        transform .22s ease,
+        background-color .22s ease,
+        color .22s ease,
+        border-color .22s ease,
+        box-shadow .22s ease;
+}
+@media (hover:hover) and (pointer:fine){
+    .exploring-strip .skill-cloud span:hover{
+        transform:translateY(-3px) scale(1.035);
+        background:var(--text);
+        color:var(--bg);
+        border-color:var(--text);
+        box-shadow:0 7px 20px rgba(127,127,127,.16);
+    }
+}
+
+/* Projects */
+.project-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+.project-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:28px;
+    transition:.3s;
+}
+.project-card:hover{
+    border-color:var(--text);
+    box-shadow:var(--shadow);
+    transform:translateY(-4px);
+}
+.project-top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:20px}
+.project-icon{
+    width:45px;height:45px;
+    display:grid;place-items:center;
+    border:1px solid var(--text);
+    border-radius:8px;
+}
+.project-card h3{font-size:20px}
+.project-card p{color:var(--muted);font-size:13px;line-height:1.8;margin-bottom:18px}
+.project-tags{display:flex;flex-wrap:wrap;gap:7px}
+.project-skills-title {
+    margin-top: 14px;
+    margin-bottom: 7px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.7;
+}
+
+.project-tags span{border:1px solid var(--border);padding:5px 8px;font-size:11px;border-radius:8px}
+
+/* Education */
+.education-card{
+    background:var(--card);
+    border:1px solid var(--text);
+    border-radius:10px;
+    padding:35px;
+    box-shadow:var(--shadow);
+    display:grid;
+    grid-template-columns:140px 1fr;
+    gap:28px;
+}
+.timeline{
+    border-left:2px solid var(--text);
+    position:relative;
+    padding-left:22px;
+}
+.timeline:before{
+    content:"";
+    position:absolute;
+    width:12px;height:12px;
+    border:2px solid var(--text);
+    background:var(--bg);
+    border-radius:50%;
+    left:-8px;top:7px;
+}
+.timeline-year{font-size:13px;color:var(--muted)}
+.edu-main h3{font-size:24px;margin-bottom:10px}
+.edu-main .school{font-size:16px;margin-bottom:7px}
+.edu-main .affiliation{color:var(--muted);font-size:13px;margin-bottom:20px}
+.cgpa{
+    display:inline-block;
+    border:1px solid var(--border);
+    padding:7px 12px;
+    border-radius:15px;
+    font-size:12px;
+    margin-bottom:24px;
+}
+.coursework{
+    border-top:1px solid var(--border);
+    padding-top:20px;
+}
+.coursework strong{display:block;margin-bottom:12px;font-size:13px}
+.coursework span{display:inline-block;color:var(--muted);font-size:12px;margin:4px 12px 4px 0}
+
+/* Certifications */
+.cert-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+.cert-type{
+    display:inline-flex;
+    width:max-content;
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:4px 8px;
+    font-size:10px;
+    color:var(--muted);
+    margin-bottom:12px;
+}
+
+.cert{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:24px;
+    min-height:190px;
+    display:flex;
+    flex-direction:column;
+    transition:.25s;
+}
+.cert:hover{border-color:var(--text);transform:translateY(-4px);box-shadow:var(--shadow)}
+.cert-icon{
+    width:42px;height:42px;
+    display:grid;place-items:center;
+    border:1px solid var(--text);
+    border-radius:8px;
+    margin-bottom:18px;
+}
+.cert h3{font-size:15px;line-height:1.5;margin-bottom:8px}
+.cert p{font-size:12px;color:var(--muted);line-height:1.6}
+.cert .issuer{padding-top:18px;margin-top:auto;font-size:11px;color:var(--muted)}
+.cert-btn{
+    margin-top:13px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    width:100%;
+    padding:9px 10px;
+    border:1px solid var(--text);
+    border-radius:7px;
+    font-size:11px;
+    transition:.25s;
+}
+.cert-btn:hover{
+    background:var(--text);
+    color:var(--bg);
+    box-shadow:0 0 14px var(--border);
+    transform:translateY(-2px);
+}
+
+.cert-note{
+    margin-top:13px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    padding:9px 10px;
+    border:1px dashed var(--border);
+    border-radius:7px;
+    font-size:10px;
+    color:var(--muted);
+}
+
+/* Contact */
+.contact-grid{
+    display:grid;
+    grid-template-columns:.8fr 1.2fr;
+    gap:20px;
+}
+.contact-info p{display:flex;gap:12px;align-items:flex-start;margin:16px 0;color:var(--muted);font-size:13px;line-height:1.6}
+.contact-info i{width:18px;color:var(--text)}
+.social-links{display:flex;gap:10px;margin-top:25px}
+.social-links a{
+    width:42px;height:42px;
+    display:grid;place-items:center;
+    border:1px solid var(--text);
+    border-radius:50%;
+    transition:.25s;
+}
+.social-links a:hover{background:var(--text);color:var(--bg);transform:translateY(-4px)}
+.contact-form{display:flex;flex-direction:column;gap:15px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.form-group{display:flex;flex-direction:column;gap:7px}
+.form-group label{font-size:12px}
+.form-group input,.form-group textarea{
+    width:100%;
+    border:1px solid var(--border);
+    background:var(--input);
+    color:var(--text);
+    padding:12px;
+    border-radius:6px;
+    font-family:inherit;
+    outline:none;
+}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--text);box-shadow:0 0 10px var(--border)}
+.form-group textarea{min-height:145px;resize:vertical}
+.submit-btn{
+    align-self:flex-start;
+    border:1px solid var(--text);
+    background:transparent;
+    color:var(--text);
+    padding:12px 20px;
+    cursor:none;
+}
+.submit-btn:hover{background:var(--text);color:var(--bg);box-shadow:0 0 15px var(--border)}
+
+footer{
+    border-top:1px solid var(--border);
+    background:var(--card);
+    padding:24px;
+    text-align:center;
+    color:var(--muted);
+    font-size:12px;
+}
+.heart{display:inline-block;animation:heartbeat 1.4s infinite}
+@keyframes heartbeat{50%{transform:scale(1.2)}}
+
+/* Responsive */
+@media(max-width:950px){
+    nav{gap:2px}
+    nav a{font-size:12px;padding:7px}
+    .hero{grid-template-columns:1fr;gap:35px}
+    .hero-card{max-width:650px}
+    .about-grid,.skill-groups,.project-grid,.contact-grid{grid-template-columns:1fr}
+    .cert-grid{grid-template-columns:repeat(2,1fr)}
+    .cert-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:700px){
+    .background-glow{width:75vw;height:75vw;filter:blur(65px);opacity:.045}
+    body{cursor:auto}
+    .cursor,.follower{display:none}
+    header{padding:14px 5vw;align-items:flex-start}
+    nav{display:none}
+    .theme-toggle{margin-left:auto;cursor:pointer}
+    .section{padding:75px 0}
+    .hero{padding:60px 0}
+    .hero h1{font-size:48px}
+    .experience-wrap{grid-template-columns:1fr;padding:22px}
+    .company-list{border-left:0;border-bottom:1px solid var(--border);padding:0 0 12px;display:flex;overflow:auto}
+    .company{white-space:nowrap}
+    .education-card{grid-template-columns:1fr;padding:25px}
+    .timeline{border-left:0;padding-left:0;padding-bottom:18px;border-bottom:1px solid var(--border)}
+    .timeline:before{display:none}
+    .cert-grid{grid-template-columns:1fr}
+    .form-row{grid-template-columns:1fr}
+}
+
+/* Cursor visibility tuning — especially for the light theme */
+:root[data-theme="dark"] .cursor{
+    box-shadow:0 0 8px rgba(255,255,255,.95),0 0 20px rgba(255,255,255,.45);
+}
+:root[data-theme="dark"] .follower{
+    background:rgba(255,255,255,.18);
+    border-color:rgba(255,255,255,.75);
+    box-shadow:0 0 14px rgba(255,255,255,.38),0 0 32px rgba(255,255,255,.20);
+}
+:root[data-theme="light"] .cursor{
+    background:#080808;
+    box-shadow:0 0 8px rgba(0,0,0,.75),0 0 18px rgba(0,0,0,.30);
+}
+:root[data-theme="light"] .follower{
+    background:rgba(0,0,0,.16);
+    border-color:rgba(0,0,0,.72);
+    box-shadow:0 0 14px rgba(0,0,0,.34),0 0 32px rgba(0,0,0,.18);
+}
+
+
+/* Interactive experience skills */
+.job-details .skills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+.job-details .skill{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:7px 11px;
+    border:1px solid var(--border);
+    border-radius:999px;
+    cursor:default;
+    transform:translateZ(0);
+    transition:
+        transform .25s ease,
+        background-color .25s ease,
+        color .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+@media (hover:hover) and (pointer:fine){
+    .job-details .skill:hover{
+        transform:translateY(-4px) scale(1.04);
+        background:var(--text);
+        color:var(--bg);
+        border-color:var(--text);
+        box-shadow:0 8px 24px rgba(127,127,127,.18);
+    }
+}
+.job-details .skill:focus-visible{
+    outline:2px solid var(--text);
+    outline-offset:3px;
+    transform:translateY(-3px);
+}
+@media (prefers-reduced-motion:reduce){
+    .job-details .skill{
+        transition:none;
+    }
+}
+
+
+/* Interactive About tiles */
+.about-grid .about-card,
+.about-grid .about-tile{
+    position:relative;
+    overflow:hidden;
+    transition:
+        transform .28s ease,
+        border-color .28s ease,
+        background-color .28s ease,
+        box-shadow .28s ease;
+}
+.about-grid .about-card::before,
+.about-grid .about-tile::before{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:2px;
+    background:var(--text);
+    transform:scaleX(0);
+    transform-origin:center;
+    transition:transform .3s ease;
+}
+@media (hover:hover) and (pointer:fine){
+    .about-grid .about-card:hover,
+    .about-grid .about-tile:hover{
+        transform:translateY(-6px);
+        border-color:var(--text);
+        background:rgba(127,127,127,.055);
+        box-shadow:0 12px 30px rgba(127,127,127,.14);
+    }
+    .about-grid .about-card:hover::before,
+    .about-grid .about-tile:hover::before{
+        transform:scaleX(1);
+    }
+}
+
+/* Interactive Skills section */
+.skills-grid .skill-card,
+.skills-grid .skill-category,
+.skills-grid .skill-box{
+    transition:
+        transform .28s ease,
+        border-color .28s ease,
+        box-shadow .28s ease,
+        background-color .28s ease;
+}
+@media (hover:hover) and (pointer:fine){
+    .skills-grid .skill-card:hover,
+    .skills-grid .skill-category:hover,
+    .skills-grid .skill-box:hover{
+        transform:translateY(-5px);
+        border-color:var(--text);
+        box-shadow:0 10px 28px rgba(127,127,127,.14);
+        background:rgba(127,127,127,.045);
+    }
+}
+
+/* Skills inside the Skills section: same tactile interaction as Experience */
+.skills-grid .skill,
+.skills-section .skill{
+    transition:
+        transform .22s ease,
+        background-color .22s ease,
+        color .22s ease,
+        border-color .22s ease,
+        box-shadow .22s ease;
+}
+@media (hover:hover) and (pointer:fine){
+    .skills-grid .skill:hover,
+    .skills-section .skill:hover{
+        transform:translateY(-3px) scale(1.035);
+        background:var(--text);
+        color:var(--bg);
+        border-color:var(--text);
+        box-shadow:0 7px 20px rgba(127,127,127,.16);
+    }
+}
+
+/* Get In Touch icons — make hover states visibly different */
+.contact-socials a,
+.contact-links a,
+.social-links a,
+.contact-info a{
+    transition:
+        transform .25s ease,
+        color .25s ease,
+        border-color .25s ease,
+        background-color .25s ease,
+        box-shadow .25s ease;
+}
+@media (hover:hover) and (pointer:fine){
+    .contact-socials a:hover,
+    .contact-links a:hover,
+    .social-links a:hover,
+    .contact-info a:hover{
+        transform:translateY(-4px) scale(1.07);
+        color:var(--bg);
+        background:var(--text);
+        border-color:var(--text);
+        box-shadow:0 8px 24px rgba(127,127,127,.22);
+    }
+    .contact-socials a:hover i,
+    .contact-links a:hover i,
+    .social-links a:hover i,
+    .contact-info a:hover i{
+        color:var(--bg);
+    }
+}
+@media (prefers-reduced-motion:reduce){
+    .about-grid .about-card,
+    .about-grid .about-tile,
+    .skills-grid .skill-card,
+    .skills-grid .skill-category,
+    .skills-grid .skill-box,
+    .skills-grid .skill,
+    .skills-section .skill,
+    .contact-socials a,
+    .contact-links a,
+    .social-links a,
+    .contact-info a,
+    .exploring-strip,
+    .exploring-strip .skill-cloud span{
+        transition:none;
+    }
+}
+
+
+/* ---------- About: interactive fact tiles ---------- */
+.fact{
+    position:relative;
+    overflow:hidden;
+    cursor:default;
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        background-color .25s ease,
+        box-shadow .25s ease;
+}
+.fact::after{
+    content:"";
+    position:absolute;
+    left:14px;
+    right:14px;
+    bottom:0;
+    height:2px;
+    background:var(--text);
+    transform:scaleX(0);
+    transform-origin:center;
+    transition:transform .28s ease;
+}
+@media (hover:hover) and (pointer:fine){
+    .fact:hover{
+        transform:translateY(-5px);
+        border-color:var(--text);
+        background:color-mix(in srgb,var(--text) 7%,transparent);
+        box-shadow:0 9px 24px rgba(127,127,127,.14);
+    }
+    .fact:hover::after{
+        transform:scaleX(1);
+    }
+    .fact:hover strong{
+        letter-spacing:.2px;
+    }
+}
+
+/* ---------- About: interactive skill pills ---------- */
+.about-grid .skills{
+    margin-top:22px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+.about-grid .skills .skill{
+    transition:
+        transform .22s ease,
+        background-color .22s ease,
+        color .22s ease,
+        border-color .22s ease,
+        box-shadow .22s ease;
+}
+@media (hover:hover) and (pointer:fine){
+    .about-grid .skills .skill:hover{
+        transform:translateY(-3px) scale(1.04);
+        background:var(--text);
+        color:var(--bg);
+        border-color:var(--text);
+        box-shadow:0 7px 20px rgba(127,127,127,.17);
+    }
+}
+
+/* ---------- Skills & Tools: make every category and skill interactive ---------- */
+.skill-box{
+    transition:
+        transform .28s ease,
+        border-color .28s ease,
+        background-color .28s ease,
+        box-shadow .28s ease;
+}
+@media (hover:hover) and (pointer:fine){
+    .skill-box:hover{
+        transform:translateY(-5px);
+        border-color:var(--text);
+        background:color-mix(in srgb,var(--text) 4%,transparent);
+        box-shadow:0 12px 30px rgba(127,127,127,.14);
+    }
+}
+.skill-cloud span{
+    display:inline-block;
+    position:relative;
+    cursor:default;
+    transition:
+        transform .2s ease,
+        color .2s ease,
+        border-color .2s ease,
+        background-color .2s ease,
+        box-shadow .2s ease;
+}
+@media (hover:hover) and (pointer:fine){
+    .skill-cloud span:hover{
+        transform:translateY(-3px) scale(1.035);
+        color:var(--text);
+        border-color:var(--text);
+        background:color-mix(in srgb,var(--text) 8%,transparent);
+        box-shadow:0 5px 16px rgba(127,127,127,.13);
+    }
+}
+
+/* ---------- Get In Touch: visible icon hover state ---------- */
+.social-links a{
+    color:var(--text);
+    background:transparent;
+    transition:
+        transform .25s ease,
+        color .25s ease,
+        background-color .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+.social-links a i{
+    color:inherit;
+    transition:color .2s ease,transform .2s ease;
+}
+@media (hover:hover) and (pointer:fine){
+    .social-links a:hover{
+        transform:translateY(-5px) scale(1.08);
+        background:var(--text);
+        color:var(--bg);
+        border-color:var(--text);
+        box-shadow:0 9px 25px rgba(127,127,127,.25);
+    }
+    .social-links a:hover i{
+        color:var(--bg);
+        transform:scale(1.08);
+    }
+}
+.social-links a:focus-visible,
+.fact:focus-visible{
+    outline:2px solid var(--text);
+    outline-offset:3px;
+}
+@media (prefers-reduced-motion:reduce){
+    .fact,
+    .fact::after,
+    .about-grid .skills .skill,
+    .skill-box,
+    .skill-cloud span,
+    .social-links a,
+    .social-links a i{
+        transition:none;
+    }
+}
+
+
+/* Layered cursor aura — the soft "light behind cursor" seen in the reference */
+:root[data-theme="dark"] .background-glow{
+    background:radial-gradient(
+        circle,
+        rgba(255,255,255,.72) 0%,
+        rgba(255,255,255,.24) 10%,
+        rgba(255,255,255,.08) 28%,
+        transparent 68%
+    );
+    opacity:.23;
+}
+:root[data-theme="light"] .background-glow{
+    background:radial-gradient(
+        circle,
+        rgba(0,0,0,.58) 0%,
+        rgba(0,0,0,.20) 10%,
+        rgba(0,0,0,.07) 28%,
+        transparent 68%
+    );
+    opacity:.17;
+}
+
+
+/* Layered atmospheric light behind the cursor */
+.background-glow{
+    width:180px;
+    height:180px;
+    opacity:.18;
+    filter:blur(34px);
+    pointer-events:none;
+}
+.background-glow::before{
+    inset:30px;
+    filter:blur(9px);
+    opacity:.72;
+}
+.background-glow::after{
+    inset:72px;
+    filter:blur(2px);
+    opacity:.34;
+}
+:root[data-theme="dark"] .background-glow{
+    opacity:.25;
+}
+:root[data-theme="light"] .background-glow{
+    opacity:.19;
+}
+
+</style>
+</head>
+
+<body>
+<div class="loader" id="loader">
+    <div class="loader-core"></div>
+    <div class="loader-text">SHALINI'S PORTFOLIO · INITIALIZING...</div>
+</div>
+
+<div class="cursor"></div>
+<div class="follower"></div>
+<canvas id="matrix"></canvas>
+<div class="noise"></div>
+<div class="background-glow" id="backgroundGlow"></div>
+
+<header>
+    <a href="#home" class="logo">Shalini</a>
+    <nav id="nav">
+        <a href="#home" class="active">Home</a>
+        <a href="#about">About</a>
+        <a href="#education">Education</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#certifications">Certifications</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" type="button">
+        <i class="fas fa-sun"></i><span>Light Mode</span>
+    </button>
+</header>
+
+<main>
+<section class="hero" id="home">
+    <div>
+        <div class="terminal-label">&gt; business_analysis + cybersecurity</div>
+        <h1>Hi, I'm <span>Shalini S.</span></h1>
+        <p class="hero-subtitle">
+            Business Analyst &amp; Project Coordinator with 2+ years of experience
+            translating business requirements into functional, testable and security-aware solutions.
+        </p>
+        <div class="hero-actions">
+            <a class="btn primary" href="#experience"><i class="fas fa-briefcase"></i> View Experience</a>
+            <a class="btn" href="#contact"><i class="fas fa-paper-plane"></i> Contact Me</a>
+            <a class="btn" href="https://drive.google.com/file/d/1yJ82s5Pjpec3kEIqxjLKjuu7MFkLtWQv/view" target="_blank" rel="noopener noreferrer">
+                <i class="fas fa-file-lines"></i> View Resume
+            </a>
+        </div>
+    </div>
+
+    <div class="hero-card">
+        <div class="code-line"><span class="prompt">&gt;</span> whoami</div>
+        <div class="code-line"><b>Shalini S</b></div>
+        <br>
+        <div class="code-line"><span class="prompt">&gt;</span> current_role</div>
+        <div class="code-line">Business Analyst &amp; Project Coordinator</div>
+        <br>
+        <div class="code-line"><span class="prompt">&gt;</span> focus</div>
+        <div class="code-line">Business Analysis · Secure Delivery · Web Security</div>
+        <br>
+        <div class="code-line"><span class="prompt">&gt;</span> tools</div>
+        <div class="code-line">JIRA · Postman · DBeaver · Figma · SQL · Burp Suite · Nmap</div>
+        <div class="status">
+            <span><span class="status-dot"></span>Open to opportunities</span>
+            <span>India</span>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="about">
+    <div class="section-heading">
+        <h2>About</h2>
+        <p>A bridge between business requirements, delivery and security.</p>
+    </div>
+
+    <div class="about-grid">
+        <div class="panel">
+            <h3>Professional Summary</h3>
+            <p>
+                Business Analyst with 2+ years of experience bridging business requirements
+                and secure system delivery across healthcare, FinTech and IT services.
+                Hands-on exposure to VAPT, OWASP Top 10 and web application security testing,
+                combined with strong experience in BRD/FRD authoring, QA/UAT execution and
+                SQL-based validation.
+            </p>
+            <div class="fact-grid">
+                <div class="fact" tabindex="0" role="button" aria-label="Experience"><small>Experience</small><strong>2+ Years</strong></div>
+                <div class="fact" tabindex="0" role="button" aria-label="Primary Role"><small>Primary Role</small><strong>Business Analyst</strong></div>
+                <div class="fact" tabindex="0" role="button" aria-label="Domain"><small>Domain</small><strong>Healthcare Payments</strong></div>
+                <div class="fact" tabindex="0" role="button" aria-label="Career Focus"><small>Career Focus</small><strong>Cybersecurity</strong></div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h3>What I Bring</h3>
+            <p>
+                Requirements elicitation, functional documentation, Agile coordination,
+                UAT and defect lifecycle management, API testing, SQL validation and
+                security-aware requirement review. I enjoy turning ambiguous business
+                problems into clear workflows that engineering teams can build and test.
+            </p>
+            <div class="skills">
+                <span class="skill" tabindex="0" role="button" aria-label="Skill: BRD / FRD">BRD / FRD</span>
+                <span class="skill" tabindex="0" role="button" aria-label="Skill: User Stories">User Stories</span>
+                <span class="skill" tabindex="0" role="button" aria-label="Skill: Agile / Scrum">Agile / Scrum</span>
+                <span class="skill" tabindex="0" role="button" aria-label="Skill: UAT">UAT</span>
+                <span class="skill" tabindex="0" role="button" aria-label="Skill: API Testing">API Testing</span>
+                <span class="skill" tabindex="0" role="button" aria-label="Skill: SQL">SQL</span>
+                <span class="skill" tabindex="0" role="button" aria-label="Skill: OWASP Top 10">OWASP Top 10</span>
+                <span class="skill" tabindex="0" role="button" aria-label="Skill: Web Security">Web Security</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="education">
+    <div class="section-heading">
+        <h2>Education</h2>
+        <p>Academic foundation in Information Technology.</p>
+    </div>
+
+    <div class="education-card">
+        <div class="timeline">
+            <div class="timeline-year">2023</div>
+            <div style="height:78px"></div>
+            <div class="timeline-year">2019</div>
+        </div>
+        <div class="edu-main">
+            <h3>B.Tech – Information Technology</h3>
+            <div class="school">Arunai Engineering College, Tiruvannamalai</div>
+            <div class="affiliation">Anna University affiliated</div>
+            <div class="cgpa"><i class="fas fa-star"></i> CGPA: 8.21 / 10</div>
+
+            <div class="coursework">
+                <strong>Relevant Coursework</strong>
+                <span>Database Management Systems</span>
+                <span>Computer Networks</span>
+                <span>Cryptography &amp; Network Security</span>
+                <span>Web Technology</span>
+                <span>Software Engineering</span>
+                <span>Security Laboratory</span>
+                <span>Big Data Analytics</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="experience">
+    <div class="section-heading">
+        <h2>Experience</h2>
+        <p>Professional experience across BA, project coordination, QA/UAT and security-aware delivery.</p>
+    </div>
+
+    <div class="experience-wrap">
+        <div class="company-list">
+            <div class="company active" data-job="0">BrightBeam Solutions</div>
+            <div class="company" data-job="1">Freelance</div>
+            <div class="company" data-job="2">HEPL</div>
+            <div class="company" data-job="3">Social Media Manager</div>
+            <div class="company" data-job="4">Campus Ambassador</div>
+            <div class="company" data-job="5">Cyber Security Intern</div>
+        </div>
+
+        <div>
+            <article class="job-details active">
+                <h3>Business Analyst &amp; Project Coordinator <span>@ BrightBeam Solutions</span></h3>
+                <div class="duration">Apr 2026 – Present · Erode · Healthcare Payments / PayCare Portal</div>
+<ul>
+                    <li>Converted stakeholder inputs into BRDs, user stories and functional specifications with zero rework reported across sprints.</li>
+                    <li>Used Azure Boards end-to-end for work-item creation, task assignment, status tracking, updates and delivery coordination.</li><li>Worked on a complex US healthcare payment project for a US client, with exposure to queue-based processing and Virtual Desktop setup supporting the project environment.</li>
+                    <li>Coordinated sprint planning, stand-ups and delivery tracking across teams.</li>
+                    <li>Executed UAT across 5+ modules, authored and executed test scenarios, tracked defects and validated API/database fixes using DBeaver.</li>
+                    <li>Performed sanity checks after development completion, validating main flows, dependencies, conditions and key functions before release/push.</li>
+                    <li>Reviewed authentication, authorization and session-handling flows to flag potential security gaps before development.</li>
+                    <li>Authored release and risk documentation, reducing miscommunication turnaround by approximately 30%.</li>
+                </ul>
+                <div class="skills">
+<span class="skill" tabindex="0" role="button" aria-label="Skill: Azure Boards">Azure Boards</span><span class="skill" tabindex="0" role="button" aria-label="Skill: DBeaver">DBeaver</span><span class="skill" tabindex="0" role="button" aria-label="Skill: UAT">UAT</span><span class="skill" tabindex="0" role="button" aria-label="Skill: Sanity Testing">Sanity Testing</span><span class="skill" tabindex="0" role="button" aria-label="Skill: Virtual Desktop">Virtual Desktop</span><span class="skill" tabindex="0" role="button" aria-label="Skill: Queue-based Processing">Queue-based Processing</span>
+</div>
+            </article>
+
+            <article class="job-details">
+                <h3>Business Analyst <span>@ Self-Employed / Freelance</span></h3>
+                <div class="duration">Feb 2026 – Mar 2026 · Remote · International Clients – Australia</div>
+                <ul>
+                    <li>Delivered BA services for 2 web application projects and documented 3+ functional modules.</li>
+                    <li>Produced BRDs, functional specifications and workflow diagrams incorporating baseline secure-design considerations.</li>
+                    <li>Reduced requirement ambiguity by approximately 40% and accelerated development kick-off.</li>
+                </ul>
+                <div class="skills">
+                    <span class="skill" tabindex="0" role="button" aria-label="Skill: Requirements">Requirements</span><span class="skill" tabindex="0" role="button" aria-label="Skill: BRD">BRD</span><span class="skill" tabindex="0" role="button" aria-label="Skill: Functional Specs">Functional Specs</span>
+                    <span class="skill" tabindex="0" role="button" aria-label="Skill: Process Mapping">Process Mapping</span><span class="skill" tabindex="0" role="button" aria-label="Skill: Secure Design">Secure Design</span>
+                </div>
+            </article>
+
+            <article class="job-details">
+                <h3>Business Analyst <span>@ HEPL</span></h3>
+                <div class="duration">Jun 2024 – Jan 2026 · Cuddalore · Enterprise Applications · RPA · Ticketing · Invoice Automation · Cybersecurity</div>
+<ul>
+                    <li>Authored 10+ feature-level BRDs, user stories and acceptance criteria across 4 enterprise products.</li>
+                    <li>Managed 50+ JIRA stories across Agile sprints and coordinated work, UAT planning, defect tracking and resolution.</li>
+                    <li>Worked across Convex, RPA projects, i-View and Tixie, including a Tixie portal supporting both service-ticketing and cybersecurity vulnerability management through admin-controlled roles and access.</li>
+                    <li>Created wireframes from scratch in Balsamiq and used Postman for API validation; tracked and assigned Bugzilla defects between teams while supporting retesting and closure.</li>
+                    <li>Performed UAT and sanity checks after development completion, validating main flows, dependencies, conditions and key functions before release/push.</li>
+                    <li>Validated SQL-level data outputs and prepared Excel dashboards used in stakeholder reviews and product decisions.</li>
+                    <li>Designed 15+ process and data-flow diagrams in Figma, reducing business-engineering clarification cycles by approximately 35%.</li>
+                    <li>Identified and documented an authorization-vulnerability finding in a production module and coordinated remediation and re-testing.</li>
+                </ul>
+                <div class="skills">
+<span class="skill" tabindex="0" role="button" aria-label="Skill: JIRA">JIRA</span><span class="skill" tabindex="0" role="button" aria-label="Skill: Trello">Trello</span><span class="skill" tabindex="0" role="button" aria-label="Skill: Bugzilla">Bugzilla</span><span class="skill" tabindex="0" role="button" aria-label="Skill: Balsamiq">Balsamiq</span><span class="skill" tabindex="0" role="button" aria-label="Skill: Postman">Postman</span><span class="skill" tabindex="0" role="button" aria-label="Skill: SAP">SAP</span><span class="skill" tabindex="0" role="button" aria-label="Skill: UiPath">UiPath</span><span class="skill" tabindex="0" role="button" aria-label="Skill: Figma">Figma</span><span class="skill" tabindex="0" role="button" aria-label="Skill: SQL">SQL</span><span class="skill" tabindex="0" role="button" aria-label="Skill: UAT">UAT</span><span class="skill" tabindex="0" role="button" aria-label="Skill: Sanity Testing">Sanity Testing</span>
+</div>
+            </article>
+
+            <article class="job-details">
+                <h3>Social Media Manager <span>@ Speak Easy</span></h3>
+                <div class="duration">Feb 2024 – Apr 2024 · 3 months · Cuddalore, Tamil Nadu, India · Part-time</div>
+                <ul>
+                    <li>Worked as a Social Media Manager at Speak Easy, supporting social media management and written communication.</li>
+                </ul>
+                <div class="skills">
+                    <span class="skill" tabindex="0" role="button" aria-label="Skill: Social Media Management">Social Media Management</span>
+                    <span class="skill" tabindex="0" role="button" aria-label="Skill: Written Communication">Written Communication</span>
+                </div>
+            </article>
+
+            <article class="job-details">
+                <h3>Campus Ambassador <span>@ REGex Software Services</span></h3>
+                <div class="duration">Sep 2020 – Nov 2020 · 3 months · Internship · Remote</div>
+                <ul>
+                    <li>Worked as a Campus Ambassador for REGex Software Services during the internship period.</li>
+                </ul>
+                <div class="skills">
+                    <span class="skill" tabindex="0" role="button" aria-label="Skill: Campus Ambassador">Campus Ambassador</span>
+                    <span class="skill" tabindex="0" role="button" aria-label="Skill: Communication">Communication</span>
+                </div>
+            </article>
+
+            <article class="job-details">
+                <h3>Cyber Security Intern <span>@ Indian Servers – Software Development Company</span></h3>
+                <div class="duration">May 2020 – Jul 2020 · 3 months · Internship · Remote</div>
+                <ul>
+                    <li>Worked as a Cyber Security Intern with exposure to manual testing and malware analysis.</li>
+                </ul>
+                <div class="skills">
+                    <span class="skill" tabindex="0" role="button" aria-label="Skill: Manual Testing">Manual Testing</span>
+                    <span class="skill" tabindex="0" role="button" aria-label="Skill: Malware Analysis">Malware Analysis</span>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="skills">
+    <div class="section-heading">
+        <h2>Skills &amp; Tools</h2>
+        <p>A focused blend of Business Analysis, Testing, Cybersecurity and technical skills.</p>
+    </div>
+
+    <div class="skill-groups">
+        <div class="skill-box">
+            <h3><i class="fas fa-diagram-project"></i> Business Analysis</h3>
+            <div class="skill-cloud">
+                <span>Requirements Elicitation</span><span>BRD / FRD</span><span>User Stories</span>
+                <span>Acceptance Criteria</span><span>Functional Specifications</span><span>Process Mapping</span>
+                <span>Gap Analysis</span><span>Stakeholder Coordination</span>
+            </div>
+        </div>
+
+        <div class="skill-box">
+            <h3><i class="fas fa-list-check"></i> Testing &amp; Delivery</h3>
+            <div class="skill-cloud">
+                <span>Agile / Scrum</span><span>UAT</span><span>Functional Testing</span>
+                <span>Test Case Design</span><span>Defect Tracking</span><span>API Testing</span>
+                <span>JIRA</span><span>Release Coordination</span>
+            </div>
+        </div>
+
+        <div class="skill-box">
+            <h3><i class="fas fa-shield-halved"></i> Cybersecurity</h3>
+            <div class="skill-cloud">
+                <span>VAPT</span><span>OWASP Top 10</span><span>Web Application Security</span>
+                <span>API Security</span><span>SQL Injection Testing</span><span>Authorization &amp; Access Control</span>
+                <span>Authentication &amp; Session Review</span><span>Vulnerability Assessment</span>
+            </div>
+        </div>
+
+        <div class="skill-box">
+            <h3><i class="fas fa-code"></i> Programming &amp; Tools</h3>
+            <div class="skill-cloud">
+                <span>HTML</span><span>CSS</span><span>Python</span><span>Java</span><span>C</span><span>C++</span><span>SQL</span>
+                <span>Burp Suite</span><span>Nmap</span><span>Wireshark</span><span>Metasploit</span>
+                <span>Postman</span><span>Selenium</span><span>JMeter</span><span>DBeaver</span>
+                <span>Figma</span><span>Confluence</span><span>Git</span><span>Windows</span><span>Linux</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="exploring-strip">
+        <strong>Currently Exploring</strong>
+        <div class="skill-cloud">
+            <span>Cybersecurity</span><span>Web Application Security</span><span>VAPT</span>
+            <span>Python for Security</span><span>Bug Bounty</span><span>Network Security</span>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="projects">
+    <div class="section-heading">
+        <h2>Projects</h2>
+        <p>Selected enterprise products and delivery areas from professional experience.</p>
+    </div>
+
+    <div class="project-grid">
+        <article class="project-card">
+            <div class="project-top">
+                <h3>PayCare Portal</h3>
+                <div class="project-icon"><i class="fas fa-credit-card"></i></div>
+            </div>
+            <p>US healthcare payments project supporting client-facing requirements, workflow coordination and validation across a complex payment process, including queue-based processing and Virtual Desktop setup exposure.</p>
+            <div class="project-skills-title">Skills &amp; Tools</div>
+            <div class="project-tags"><span>Azure Boards</span><span>DBeaver</span><span>UAT</span><span>Sanity Testing</span><span>Virtual Desktop</span><span>Queue-based Processing</span><span>User Stories</span><span>Documentation</span></div>
+        </article>
+
+        <article class="project-card">
+            <div class="project-top">
+                <h3>Tixie</h3>
+                <div class="project-icon"><i class="fas fa-ticket"></i></div>
+            </div>
+            <p>Enterprise portal supporting both service-ticketing and cybersecurity vulnerability management, with admin-controlled roles and access. Supported workflow definition, security issue tracking and validation.</p>
+            <div class="project-skills-title">Skills &amp; Tools</div>
+            <div class="project-tags"><span>Bugzilla</span><span>Balsamiq</span><span>UAT</span><span>User Stories</span><span>Documentation</span><span>RBAC</span></div>
+        </article>
+
+        <article class="project-card">
+            <div class="project-top">
+                <h3>i-View</h3>
+                <div class="project-icon"><i class="fas fa-file-invoice"></i></div>
+            </div>
+            <p>Invoice-processing and automation product where I supported requirements, API validation, defect coordination and UAT across invoice and SAP-related workflows.</p>
+            <div class="project-skills-title">Skills &amp; Tools</div>
+            <div class="project-tags"><span>Postman</span><span>Bugzilla</span><span>UAT</span><span>SAP</span><span>User Stories</span><span>Documentation</span></div>
+        </article>
+
+        <article class="project-card">
+            <div class="project-top">
+                <h3>Convex</h3>
+                <div class="project-icon"><i class="fas fa-chart-line"></i></div>
+            </div>
+            <p>Enterprise project-management product supported through feature requirements, wireframes, defect coordination and validation of functional workflows.</p>
+            <div class="project-skills-title">Skills &amp; Tools</div>
+            <div class="project-tags"><span>Bugzilla</span><span>Balsamiq</span><span>UAT</span><span>User Stories</span><span>Documentation</span><span>Trello</span></div>
+        </article>
+    </div>
+</section>
+
+<section class="section" id="certifications">
+    <div class="section-heading">
+        <h2>Certifications</h2>
+        <p>Selected credentials that support my foundation in data analytics, cybersecurity and professional skills.</p>
+    </div>
+
+    <div class="cert-grid">
+        <article class="cert">
+            <div class="cert-icon"><i class="fas fa-chart-column"></i></div>
+            <span class="cert-type">PROFESSIONAL CERTIFICATE</span>
+            <h3>Google Data Analytics Professional Certificate</h3>
+            <p>Eight-course professional certificate covering spreadsheets, SQL, Tableau, R and practical data analytics.</p>
+            <div class="issuer">Google · Coursera</div>
+            <a class="cert-btn" href="https://drive.google.com/file/d/1pk3XfKgtYTUc1CUpUOv18BgbeqKOVlUH/view" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i> View Certification</a>
+        </article>
+
+        <article class="cert">
+            <div class="cert-icon"><i class="fas fa-shield-halved"></i></div>
+            <span class="cert-type">CERTIFICATION</span>
+            <h3>Cybersecurity</h3>
+            <p>Cybersecurity-focused certification demonstrating foundational security knowledge.</p>
+            <div class="issuer">NASSCOM</div>
+            <a class="cert-btn" href="https://drive.google.com/file/d/1MrQrxuhQP7_tX9euCi-wM23L0UREeBYY/view" target="_blank" rel="noopener noreferrer" aria-label="View NASSCOM Certification"><i class="fas fa-link"></i> View Certification</a>
+        </article>
+
+        <article class="cert">
+            <div class="cert-icon"><i class="fas fa-user-secret"></i></div>
+            <span class="cert-type">COURSE</span>
+            <h3>Cyber Crime Investigation</h3>
+            <p>Foundational learning focused on cyber crime investigation and digital security concepts.</p>
+            <div class="issuer">Prompt InfoTech</div>
+            <a class="cert-btn" href="https://drive.google.com/file/d/1YoE7jorHQn_SKr5QlfiXj9gASypwZXTH/view" target="_blank" rel="noopener noreferrer" aria-label="View Cyber Crime Investigation Course"><i class="fas fa-link"></i> View Certification</a>
+        </article>
+
+        <article class="cert">
+            <div class="cert-icon"><i class="fas fa-bug"></i></div>
+            <span class="cert-type">COURSE</span>
+            <h3>Bug Bounty</h3>
+            <p>Foundational learning related to bug bounty methodology and web security.</p>
+            <div class="issuer">Prompt InfoTech</div>
+            <a class="cert-btn" href="https://drive.google.com/file/d/13AZ8SmkUyTkF4ZcU_EADH4wBu47ETRmc/view" target="_blank" rel="noopener noreferrer" aria-label="View Bug Bounty Course"><i class="fas fa-link"></i> View Certification</a>
+        </article>
+
+        <article class="cert">
+            <div class="cert-icon"><i class="fas fa-user-shield"></i></div>
+            <span class="cert-type">COURSE</span>
+            <h3>Certified Ethical Hacking &amp; Penetration Testing</h3>
+            <p>Completed practical and theory training in ethical hacking and penetration testing.</p>
+            <div class="issuer">Cappriciosec University</div>
+            <a class="cert-btn" href="https://drive.google.com/file/d/1mRtIpol1RuC6Wk3N3VmEc-MOvGq2p1LR/view" target="_blank" rel="noopener noreferrer"><i class="fas fa-link"></i> View Certification</a>
+        </article>
+
+        <article class="cert">
+            <div class="cert-icon"><i class="fas fa-briefcase"></i></div>
+            <span class="cert-type">JOB SIMULATION</span>
+            <h3>Cybersecurity Analyst Job Simulation</h3>
+            <p>Completed a practical job simulation covering identity and access management, IAM fundamentals, secure cloud solutions and platform integration.</p>
+            <div class="issuer">Tata · Forage</div>
+            <a class="cert-btn" href="https://drive.google.com/file/d/1MOgqeR3S0DXWUn67bXPt5E0qOHYENYYe/view" target="_blank" rel="noopener noreferrer"><i class="fas fa-image"></i> View Certification</a>
+        </article>
+    </div>
+</section>
+
+<section class="section" id="contact">
+    <div class="section-heading">
+        <h2>Contact</h2>
+        <p>Let's connect about opportunities, projects or collaboration.</p>
+    </div>
+
+    <div class="contact-grid">
+        <div class="panel contact-info">
+            <h3>Get In Touch</h3>
+            <p><i class="fas fa-location-dot"></i><span>Cuddalore, Tamil Nadu, India</span></p>
+            <p><i class="fas fa-phone"></i><span>+91 9150602767</span></p>
+            <p><i class="fas fa-envelope"></i><span>shalinise22002@gmail.com</span></p>
+            <p><i class="fab fa-linkedin"></i><span>linkedin.com/in/shalini-s-0b407a1a9</span></p>
+
+            <div class="social-links">
+                <a href="mailto:shalinisenthil2002@gmail.com" target="_blank" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                <a href="https://www.linkedin.com/in/shalini-s-0b407a1a9/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://github.com/shalinise" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+
+        <div class="panel">
+            <form class="contact-form" id="contactForm"
+                  action="https://formsubmit.co/ajax/shalinise22002@gmail.com"
+                  method="POST">
+                <input type="hidden" name="_subject" value="New Portfolio Contact Message">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="text" name="_honey" tabindex="-1" autocomplete="off"
+                       style="display:none !important" aria-hidden="true">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input id="name" name="name" autocomplete="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input id="email" name="email" type="email"
+                               autocomplete="email" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input id="subject" name="subject" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button class="submit-btn" id="submitBtn" type="submit">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+                <p id="formStatus" class="form-status" aria-live="polite"></p>
+            </form>
+        </div>
+    </div>
+</section>
+</main>
+
+<footer>
+    <p>&copy; <span id="year"></span> Shalini S. · Made with <span class="heart">❤</span> and code.</p>
+</footer>
+
+<script>
+/* Loader */
+window.addEventListener("load",()=>{
+    setTimeout(()=>document.getElementById("loader").classList.add("hide"),900);
+});
+
+/* Cursor */
+const cursor=document.querySelector(".cursor");
+const follower=document.querySelector(".follower");
+let mouseX=-100,mouseY=-100,followX=-100,followY=-100;
+
+document.addEventListener("mousemove",e=>{
+    mouseX=e.clientX; mouseY=e.clientY;
+    cursor.style.transform=`translate(${mouseX-4.5}px,${mouseY-4.5}px)`;
+
+    /* Feed the particle field even though the canvas itself is non-interactive. */
+    if(typeof particleMouse !== "undefined"){
+        particleMouse.x=e.clientX;
+        particleMouse.y=e.clientY;
+    }
+
+    /* Move the layered atmospheric light with the cursor. */
+    const aura=document.getElementById("backgroundGlow");
+    if(aura){
+        aura.style.left=e.clientX+"px";
+        aura.style.top=e.clientY+"px";
+    }
+});
+function animateFollower(){
+    followX += (mouseX-followX)*0.16;
+    followY += (mouseY-followY)*0.16;
+    follower.style.transform=`translate(${followX-15}px,${followY-15}px)`;
+    requestAnimationFrame(animateFollower);
+}
+animateFollower();
+const initialAura=document.getElementById("backgroundGlow");
+if(initialAura){
+    initialAura.style.left=(innerWidth/2)+"px";
+    initialAura.style.top=(innerHeight/2)+"px";
+}
+
+/* Theme */
+const html=document.documentElement;
+const themeToggle=document.getElementById("themeToggle");
+function updateTheme(){
+    const dark=html.getAttribute("data-theme")==="dark";
+    themeToggle.innerHTML=dark
+        ? '<i class="fas fa-sun"></i><span>Light Mode</span>'
+        : '<i class="fas fa-moon"></i><span>Dark Mode</span>';
+}
+themeToggle.addEventListener("click",()=>{
+    html.setAttribute("data-theme",html.getAttribute("data-theme")==="dark"?"light":"dark");
+    updateTheme();
+});
+updateTheme();
+
+/* Experience tabs */
+const companies=document.querySelectorAll(".company");
+const jobs=document.querySelectorAll(".job-details");
+companies.forEach((company,index)=>{
+    company.addEventListener("click",()=>{
+        companies.forEach(c=>c.classList.remove("active"));
+        jobs.forEach(j=>j.classList.remove("active"));
+        company.classList.add("active");
+        jobs[index].classList.add("active");
+    });
+});
+
+/* Active navigation */
+const sections=[...document.querySelectorAll("section[id]")];
+const navLinks=[...document.querySelectorAll("nav a[href^='#']")];
+const observer=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+        if(entry.isIntersecting){
+            navLinks.forEach(link=>link.classList.toggle("active",link.getAttribute("href")==="#"+entry.target.id));
+        }
+    });
+},{rootMargin:"-35% 0px -55% 0px",threshold:0});
+sections.forEach(section=>observer.observe(section));
+
+
+
+/* Background particles — taken from testfff(1).html */
+// Canvas Setup
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        function setCanvasSize() {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.getBoundingClientRect();
+            
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            
+            ctx.scale(dpr, dpr);
+            canvas.style.width = `${rect.width}px`;
+            canvas.style.height = `${rect.height}px`;
+        }
+
+        setCanvasSize();
+
+        let particleMouse = {
+            x: -9999,
+            y: -9999,
+            radius: 115
+        };
+
+        /* Pointer position is supplied by the page-level cursor listener because
+           the canvas intentionally sits behind the portfolio and ignores pointer events. */
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 2;
+                this.speedY = (Math.random() - 0.5) * 2;
+                this.opacity = Math.random() * 0.5 + 0.5;
+            }
+
+            draw() {
+                const isDark = html.getAttribute('data-theme') === 'dark';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = isDark 
+                    ? `rgba(255, 255, 255, ${this.opacity})`
+                    : `rgba(10, 10, 10, ${this.opacity})`;
+                ctx.fill();
+            }
+
+            update() {
+                if (particleMouse.x > -1000 && particleMouse.y > -1000) {
+                    const dx = particleMouse.x - this.x;
+                    const dy = particleMouse.y - this.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < particleMouse.radius) {
+                        const angle = Math.atan2(dy, dx);
+                        const force = (particleMouse.radius - distance) / particleMouse.radius;
+                        this.x -= Math.cos(angle) * force * 5;
+                        this.y -= Math.sin(angle) * force * 5;
+                        this.opacity = Math.min(1, this.opacity + 0.1);
+                    }
+                }
+
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+
+                if (this.x < -50 || this.x > canvas.width + 50 ||
+                    this.y < -50 || this.y > canvas.height + 50) {
+                    this.reset();
+                }
+            }
+        }
+
+        const particles = [];
+        const particleCount = 150;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            const isDark = html.getAttribute('data-theme') === 'dark';
+            ctx.fillStyle = isDark ? 'rgba(10, 10, 10, 0.1)' : 'rgba(240, 240, 240, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            particles.forEach((p1, i) => {
+                particles.slice(i + 1).forEach(p2 => {
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 100) {
+                        ctx.beginPath();
+                        const opacity = 0.2 * (1 - distance/100);
+                        ctx.strokeStyle = isDark 
+                            ? `rgba(255, 255, 255, ${opacity})`
+                            : `rgba(10, 10, 10, ${opacity})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                });
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', setCanvasSize);
+        animate();
+
+/* Contact form — AJAX submission, so the portfolio stays on the same page. */
+const contactForm=document.getElementById("contactForm");
+const formStatus=document.getElementById("formStatus");
+const submitBtn=document.getElementById("submitBtn");
+
+contactForm.addEventListener("submit",async(event)=>{
+    event.preventDefault();
+
+    formStatus.className="form-status";
+    formStatus.textContent="Sending your message…";
+    submitBtn.disabled=true;
+
+    try{
+        const response=await fetch(contactForm.action,{
+            method:"POST",
+            headers:{"Accept":"application/json"},
+            body:new FormData(contactForm)
+        });
+
+        let data={};
+        try{data=await response.json();}catch(_){}
+
+        if(response.ok && data.success!==false){
+            formStatus.className="form-status success";
+            formStatus.innerHTML="✓ Thanks for your message! I’ll get back to you soon.";
+            contactForm.reset();
+        }else{
+            throw new Error(data.message||"Unable to send the message.");
+        }
+    }catch(error){
+        formStatus.className="form-status error";
+        formStatus.textContent="Sorry, your message could not be sent. Please try again.";
+    }finally{
+        submitBtn.disabled=false;
+    }
+});
+
+document.getElementById("year").textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</main>
+
+
+
+<script>
+/* Loader */
+window.addEventListener("load",()=>{
+    setTimeout(()=>document.getElementById("loader").classList.add("hide"),900);
+});
+
+/* Cursor */
+const cursor=document.querySelector(".cursor");
+const follower=document.querySelector(".follower");
+let mouseX=-100,mouseY=-100,followX=-100,followY=-100;
+
+document.addEventListener("mousemove",e=>{
+    mouseX=e.clientX; mouseY=e.clientY;
+    cursor.style.transform=`translate(${mouseX-4.5}px,${mouseY-4.5}px)`;
+
+    /* Feed the particle field even though the canvas itself is non-interactive. */
+    if(typeof particleMouse !== "undefined"){
+        particleMouse.x=e.clientX;
+        particleMouse.y=e.clientY;
+    }
+
+    /* Move the layered atmospheric light with the cursor. */
+    const aura=document.getElementById("backgroundGlow");
+    if(aura){
+        aura.style.left=e.clientX+"px";
+        aura.style.top=e.clientY+"px";
+    }
+});
+function animateFollower(){
+    followX += (mouseX-followX)*0.16;
+    followY += (mouseY-followY)*0.16;
+    follower.style.transform=`translate(${followX-15}px,${followY-15}px)`;
+    requestAnimationFrame(animateFollower);
+}
+animateFollower();
+const initialAura=document.getElementById("backgroundGlow");
+if(initialAura){
+    initialAura.style.left=(innerWidth/2)+"px";
+    initialAura.style.top=(innerHeight/2)+"px";
+}
+
+/* Theme */
+const html=document.documentElement;
+const themeToggle=document.getElementById("themeToggle");
+function updateTheme(){
+    const dark=html.getAttribute("data-theme")==="dark";
+    themeToggle.innerHTML=dark
+        ? '<i class="fas fa-sun"></i><span>Light Mode</span>'
+        : '<i class="fas fa-moon"></i><span>Dark Mode</span>';
+}
+themeToggle.addEventListener("click",()=>{
+    html.setAttribute("data-theme",html.getAttribute("data-theme")==="dark"?"light":"dark");
+    updateTheme();
+});
+updateTheme();
+
+/* Experience tabs */
+const companies=document.querySelectorAll(".company");
+const jobs=document.querySelectorAll(".job-details");
+companies.forEach((company,index)=>{
+    company.addEventListener("click",()=>{
+        companies.forEach(c=>c.classList.remove("active"));
+        jobs.forEach(j=>j.classList.remove("active"));
+        company.classList.add("active");
+        jobs[index].classList.add("active");
+    });
+});
+
+/* Active navigation */
+const sections=[...document.querySelectorAll("section[id]")];
+const navLinks=[...document.querySelectorAll("nav a[href^='#']")];
+const observer=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+        if(entry.isIntersecting){
+            navLinks.forEach(link=>link.classList.toggle("active",link.getAttribute("href")==="#"+entry.target.id));
+        }
+    });
+},{rootMargin:"-35% 0px -55% 0px",threshold:0});
+sections.forEach(section=>observer.observe(section));
+
+
+
+/* Background particles — taken from testfff(1).html */
+// Canvas Setup
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        function setCanvasSize() {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.getBoundingClientRect();
+            
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            
+            ctx.scale(dpr, dpr);
+            canvas.style.width = `${rect.width}px`;
+            canvas.style.height = `${rect.height}px`;
+        }
+
+        setCanvasSize();
+
+        let particleMouse = {
+            x: -9999,
+            y: -9999,
+            radius: 115
+        };
+
+        /* Pointer position is supplied by the page-level cursor listener because
+           the canvas intentionally sits behind the portfolio and ignores pointer events. */
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 2;
+                this.speedY = (Math.random() - 0.5) * 2;
+                this.opacity = Math.random() * 0.5 + 0.5;
+            }
+
+            draw() {
+                const isDark = html.getAttribute('data-theme') === 'dark';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = isDark 
+                    ? `rgba(255, 255, 255, ${this.opacity})`
+                    : `rgba(10, 10, 10, ${this.opacity})`;
+                ctx.fill();
+            }
+
+            update() {
+                if (particleMouse.x > -1000 && particleMouse.y > -1000) {
+                    const dx = particleMouse.x - this.x;
+                    const dy = particleMouse.y - this.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < particleMouse.radius) {
+                        const angle = Math.atan2(dy, dx);
+                        const force = (particleMouse.radius - distance) / particleMouse.radius;
+                        this.x -= Math.cos(angle) * force * 5;
+                        this.y -= Math.sin(angle) * force * 5;
+                        this.opacity = Math.min(1, this.opacity + 0.1);
+                    }
+                }
+
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+
+                if (this.x < -50 || this.x > canvas.width + 50 ||
+                    this.y < -50 || this.y > canvas.height + 50) {
+                    this.reset();
+                }
+            }
+        }
+
+        const particles = [];
+        const particleCount = 150;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            const isDark = html.getAttribute('data-theme') === 'dark';
+            ctx.fillStyle = isDark ? 'rgba(10, 10, 10, 0.1)' : 'rgba(240, 240, 240, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            particles.forEach((p1, i) => {
+                particles.slice(i + 1).forEach(p2 => {
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 100) {
+                        ctx.beginPath();
+                        const opacity = 0.2 * (1 - distance/100);
+                        ctx.strokeStyle = isDark 
+                            ? `rgba(255, 255, 255, ${opacity})`
+                            : `rgba(10, 10, 10, ${opacity})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                });
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', setCanvasSize);
+        animate();
+
+/* Contact form — AJAX submission, so the portfolio stays on the same page. */
+const contactForm=document.getElementById("contactForm");
+const formStatus=document.getElementById("formStatus");
+const submitBtn=document.getElementById("submitBtn");
+
+contactForm.addEventListener("submit",async(event)=>{
+    event.preventDefault();
+
+    formStatus.className="form-status";
+    formStatus.textContent="Sending your message…";
+    submitBtn.disabled=true;
+
+    try{
+        const response=await fetch(contactForm.action,{
+            method:"POST",
+            headers:{"Accept":"application/json"},
+            body:new FormData(contactForm)
+        });
+
+        let data={};
+        try{data=await response.json();}catch(_){}
+
+        if(response.ok && data.success!==false){
+            formStatus.className="form-status success";
+            formStatus.innerHTML="✓ Thanks for your message! I’ll get back to you soon.";
+            contactForm.reset();
+        }else{
+            throw new Error(data.message||"Unable to send the message.");
+        }
+    }catch(error){
+        formStatus.className="form-status error";
+        formStatus.textContent="Sorry, your message could not be sent. Please try again.";
+    }finally{
+        submitBtn.disabled=false;
+    }
+});
+
+document.getElementById("year").textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
+
